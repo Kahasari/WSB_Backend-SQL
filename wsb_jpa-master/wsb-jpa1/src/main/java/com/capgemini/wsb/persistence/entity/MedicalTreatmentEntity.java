@@ -2,14 +2,7 @@ package com.capgemini.wsb.persistence.entity;
 
 import com.capgemini.wsb.persistence.enums.TreatmentType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "MEDICAL_TREATMENT")
@@ -20,11 +13,12 @@ public class MedicalTreatmentEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(name = "description", length = 30,nullable = false)
 	private String description;
 
 	// Relacje
-    // Brak relacji, zabieg sam w sobie nie musi wiedzieć o wizycie, czyli zabieg nie zna wizyty (rodzica)
+    @ManyToOne(fetch = FetchType.LAZY)
+	private VisitEntity visitEntity; // relacja dwustronna
 
 	// gettery & settery
 	@Enumerated(EnumType.STRING)

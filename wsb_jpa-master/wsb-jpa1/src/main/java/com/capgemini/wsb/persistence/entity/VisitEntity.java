@@ -23,21 +23,16 @@ public class VisitEntity {
 
 	// Relacja wiele do jednego pomiędzy Visit a Doctor, dwukierunkowa
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id")
 	private DoctorEntity doctor;
 
 	// Relacja wiele do jednego pomiędzy Visit a Doctor, dwukierunkowa
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id")
 	private PatientEntity patient;
 
 	// Relacja jeden do wielu pomiędzy Visit a Doctor, jednokierunkowa
 	// Czyli w wizycie opisany jest jej typ/przebieg,
 	// natomiast sama "agenda" leczenie opisuję jedynie jej przebieg, nie potrzebuję znać daty wykonania.
-	@OneToMany(
-			cascade = CascadeType.ALL,
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "visit_id")
+	@OneToMany(mappedBy = "visitEntity", orphanRemoval = true)
 	private Collection<MedicalTreatmentEntity> medicalTreatment;
 
 

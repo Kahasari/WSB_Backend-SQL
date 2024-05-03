@@ -42,7 +42,7 @@ public class PatientEntity {
 	// Relacja jeden do wielu pomiędzy Patient a Visit, dwukierunkowa,
 	// Patient może mieć wiele wizyt, jedna wizyta przypisana do konkretnego doktora,
 	// Patient jest rodzicem dla Visit
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "patient")
 	private Collection<VisitEntity> visitEntities;
 
 

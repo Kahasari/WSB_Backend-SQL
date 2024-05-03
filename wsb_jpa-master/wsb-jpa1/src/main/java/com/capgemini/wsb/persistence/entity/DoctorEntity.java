@@ -15,13 +15,13 @@ public class DoctorEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "first_name", nullable = false)
+	@Column(name = "first_name", length = 25, nullable = false)
 	private String firstName;
 
 	@Column(name = "last_name", length = 25, nullable = false)
 	private String lastName;
 
-	@Column(name = "phone_number", length = 9, nullable = true)
+	@Column(name = "phone_number", length = 15, nullable = true)
 	private String telephoneNumber;
 
 	@Column(name = "e_mail", length = 50, nullable = true)
@@ -46,7 +46,7 @@ public class DoctorEntity {
 	// Relacja jeden do wielu pomiędzy Doctor a Visit, dwukierunkowa,
 	// Doctor może mieć wiele wizyt, lecz jedna wizyta naturalnie może być przypisana tylko do jednego doktora,
 	// Doctor jest rodzicem dla Visit
-		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "doctor")
 		private Collection<VisitEntity> visitEntities;
 
 

@@ -10,13 +10,13 @@ public class AddressEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "city",nullable = false)
+	@Column(name = "city", length = 80, nullable = false)
 	private String city;
-	@Column(name = "address_line1",nullable = false)
+	@Column(name = "address_line1", length = 40, nullable = false)
 	private String addressLine1;
-	@Column(name = "address_line2",nullable = false)
+	@Column(name = "address_line2", length = 40, nullable = false)
 	private String addressLine2;
-	@Column(name = "postal_code",nullable = false)
+	@Column(name = "postal_code", length = 10, nullable = false)
 	private String postalCode;
 
 	// Relacje
@@ -68,6 +68,13 @@ public class AddressEntity {
 		this.postalCode = postalCode;
 	}
 
+	public DoctorEntity getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
 }
 
 // Push Test 3
