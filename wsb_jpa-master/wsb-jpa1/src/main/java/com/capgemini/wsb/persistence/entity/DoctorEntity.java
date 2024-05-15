@@ -9,7 +9,7 @@ import java.util.Collection;
 @Table(name = "DOCTOR")
 public class DoctorEntity {
 
-	// Id & zmienne
+	// Id & zmienne //
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,24 +34,26 @@ public class DoctorEntity {
 	private Specialization specialization;
 
 
-
-	// Relacje
-
-	// Relacja jeden do jednego pomiędzy Doctor a Address, dwukierunkowa,
-	// Czyli Doctor zna "swój" adres, oraz adres wie jaki doktor pod tym adresem zamieszkuję,
-	// Doctor jest rodzicem dla Address
+	// Relacje //
+	/**
+	 * Relacja dwukierunkowa pomiędzy Doctor a Address, jeden do jednego.
+	 * Każdy doktor ma jedne adres, każdy adres może należeć do jednego doktora.
+	 * Doctor jako ojciec w tej relacji
+	 **/
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private AddressEntity address;
 
-	// Relacja jeden do wielu pomiędzy Doctor a Visit, dwukierunkowa,
-	// Doctor może mieć wiele wizyt, lecz jedna wizyta naturalnie może być przypisana tylko do jednego doktora,
-	// Doctor jest rodzicem dla Visit
+	/**
+	 * Relacja dwukierunkowa pomiędzy Doctor a Visit, jeden do wielu.
+	 * Każdy doktor może mieć wiele wizyt, każda wizyta przypisana do jednego doktora.
+	 * Doctor jako ojciec w tej relacji
+	 **/
 		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "doctor")
 		private Collection<VisitEntity> visitEntities;
 
 
+	// gettery & settery //
 
-	// gettery & settery
 	public Long getId() {
 		return id;
 	}
@@ -108,4 +110,19 @@ public class DoctorEntity {
 		this.specialization = specialization;
 	}
 
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public Collection<VisitEntity> getVisitEntities() {
+		return visitEntities;
+	}
+
+	public void setVisitEntities(Collection<VisitEntity> visitEntities) {
+		this.visitEntities = visitEntities;
+	}
 }

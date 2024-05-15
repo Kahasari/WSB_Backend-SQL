@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "ADDRESS")
 public class AddressEntity {
 
-	// Id & zmienne
+	// Id & zmienne. //
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -19,15 +19,25 @@ public class AddressEntity {
 	@Column(name = "postal_code", length = 10, nullable = false)
 	private String postalCode;
 
-	// Relacje
+	// Relacje //
+	/**
+ 	* Relacja dwukierunkowa pomiędzy Doctor a Adress, jeden do jednego.
+ 	* Każdy z doktorów posiada jeden adres, każdy adres może należeć do jednego doktora.
+	**/
 
-	// Relacja dwukierunkowa pomiędzy Doctor a Adress
 	@OneToOne(mappedBy = "address")
 	private DoctorEntity doctor;
 
+	 /**
+	 * Relacja dwukierunkowa pomiędzy Doctor a Patient, jeden do jednego.
+	 * Każdy z pacjentów posiada jeden adres, każdy adres może należeć do jednego pacjenta.
+	 **/
+	@OneToOne(mappedBy = "address")
+	private PatientEntity patient;
 
 
-	// gettery & settery
+	// gettery & settery //
+
 	public Long getId() {
 		return id;
 	}
@@ -74,6 +84,14 @@ public class AddressEntity {
 
 	public void setDoctor(DoctorEntity doctor) {
 		this.doctor = doctor;
+	}
+
+	public PatientEntity getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
 	}
 }
 

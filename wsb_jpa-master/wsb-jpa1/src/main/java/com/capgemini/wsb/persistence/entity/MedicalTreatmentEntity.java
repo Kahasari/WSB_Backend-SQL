@@ -8,21 +8,26 @@ import javax.persistence.*;
 @Table(name = "MEDICAL_TREATMENT")
 public class MedicalTreatmentEntity {
 
-	// Id & zmienne
+	// Id & zmienne //
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "description", length = 30,nullable = false)
+	@Column(name = "description", length = 300,nullable = false)
 	private String description;
 
-	// Relacje
+	// Relacje //
+	/**
+	 * Relacja między MedicalTreatment a Visit, wiele do jednego.
+	 **/
     @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "visit_id")
 	private VisitEntity visitEntity; // relacja dwustronna
 
-	// gettery & settery
 	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
+
+	// gettery & settery //
 
 	public Long getId() {
 		return id;
@@ -40,6 +45,14 @@ public class MedicalTreatmentEntity {
 		this.description = description;
 	}
 
+	public VisitEntity getVisitEntity() {
+		return visitEntity;
+	}
+
+	public void setVisitEntity(VisitEntity visitEntity) {
+		this.visitEntity = visitEntity;
+	}
+
 	public TreatmentType getType() {
 		return type;
 	}
@@ -47,5 +60,4 @@ public class MedicalTreatmentEntity {
 	public void setType(TreatmentType type) {
 		this.type = type;
 	}
-
 }

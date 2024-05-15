@@ -2,13 +2,14 @@ package com.capgemini.wsb.persistence.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
 @Table(name = "PATIENT")
 public class PatientEntity {
 
-	// Id & zmienne
+	// Id & zmienne //
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,21 +32,31 @@ public class PatientEntity {
 	@Column(name = "date_of_birth", length = 50,nullable = false)
 	private LocalDate dateOfBirth;
 
-	// Relacje
+	 /**
+	 * Dodatkowe pole o typie innym niż String, data rejestracji/dodania do bazy
+	 **/
+	@Column(name = "timeOfRegistration", nullable = true)
+	private LocalDateTime registrationTime;
 
-	// Relacja jeden do jednego pomiędzy Patient a Address, dwukierunkowa,
-	// Patient zna "swój" adres, a Address wie jaki pacjent pod tym adresem zamieszkuję,
-	// Patient jako rodzic dla Adresu
+	// Relacje
+	/**
+	 * Relacja dwukierunkowa pomiędzy Patient a Address, jeden do jednego.
+	 * Każdy pacjent ma jeden adres, każdy adres należy do jednego pacjenta.
+	 * Pacjent jest nadrzędnym w relacji
+	 **/
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private AddressEntity address;
 
-	// Relacja jeden do wielu pomiędzy Patient a Visit, dwukierunkowa,
-	// Patient może mieć wiele wizyt, jedna wizyta przypisana do konkretnego doktora,
-	// Patient jest rodzicem dla Visit
+	/**
+	 * Relacja dwukierunkowa pomiędzy Patient a Visit, jeden do wielu.
+	 * Każdy pacjent może mieć wiele wizyt, każda wizyta przypisana do tylko jednego pacjenta.
+	 * Pacjent jest nadrzędnym w relacji.
+	 **/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "patient")
 	private Collection<VisitEntity> visitEntities;
 
 
+	// gettery & settery //
 
 	public Long getId() {
 		return id;
@@ -55,7 +66,6 @@ public class PatientEntity {
 		this.id = id;
 	}
 
-	// gettery & settery
 	public String getFirstName() {
 		return firstName;
 	}
@@ -104,4 +114,27 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public LocalDateTime getRegistrationTime() {
+		return registrationTime;
+	}
+
+	public void setRegistrationTime(LocalDateTime registrationTime) {
+		this.registrationTime = registrationTime;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public Collection<VisitEntity> getVisitEntities() {
+		return visitEntities;
+	}
+
+	public void setVisitEntities(Collection<VisitEntity> visitEntities) {
+		this.visitEntities = visitEntities;
+	}
 }

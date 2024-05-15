@@ -2,11 +2,13 @@ package com.capgemini.wsb.mapper;
 
 import com.capgemini.wsb.dto.AddressTO;
 import com.capgemini.wsb.persistence.entity.AddressEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public final class AddressMapper
 {
 
-    public static AddressTO mapToTO(final AddressEntity addressEntity)
+    public AddressTO mapToTO(final AddressEntity addressEntity)
     {
         if (addressEntity == null)
         {

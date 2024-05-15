@@ -8,7 +8,7 @@ import java.util.Collection;
 @Table(name = "VISIT")
 public class VisitEntity {
 
-	// Id & zmienne
+	// Id & zmienne //
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -21,22 +21,29 @@ public class VisitEntity {
 
 	// Relacje
 
-	// Relacja wiele do jednego pomiędzy Visit a Doctor, dwukierunkowa
+	/**
+	 * Relacja pomiędzy Visit a Doctor, dwukierunkowa, wiele do jednego.
+	 **/
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doctor_id")
 	private DoctorEntity doctor;
 
-	// Relacja wiele do jednego pomiędzy Visit a Doctor, dwukierunkowa
+	/**
+	 * Relacja pomiędzy Visit a Patient, dwukierunkowa, wiele do jednego.
+	 **/
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id")
 	private PatientEntity patient;
 
-	// Relacja jeden do wielu pomiędzy Visit a Doctor, jednokierunkowa
-	// Czyli w wizycie opisany jest jej typ/przebieg,
-	// natomiast sama "agenda" leczenie opisuję jedynie jej przebieg, nie potrzebuję znać daty wykonania.
+	/**
+	 * Relacja pomiędzy Visit a MedicalTreatment, dwukierunkowa, jedne do wielu.
+	 **/
 	@OneToMany(mappedBy = "visitEntity", orphanRemoval = true)
 	private Collection<MedicalTreatmentEntity> medicalTreatment;
 
 
 	// gettery & settery
+
 	public Long getId() {
 		return id;
 	}
@@ -61,4 +68,27 @@ public class VisitEntity {
 		this.time = time;
 	}
 
+	public DoctorEntity getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
+
+	public PatientEntity getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
+	}
+
+	public Collection<MedicalTreatmentEntity> getMedicalTreatment() {
+		return medicalTreatment;
+	}
+
+	public void setMedicalTreatment(Collection<MedicalTreatmentEntity> medicalTreatment) {
+		this.medicalTreatment = medicalTreatment;
+	}
 }

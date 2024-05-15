@@ -21,17 +21,18 @@ public class AddressDaoTest
     @Transactional
     @Test
     public void testShouldFindAddressById() {
-        // given
-        // when
+
+        // given //
+        // when //
         AddressEntity addressEntity = addressDao.findOne(1L);
-        // then
+        // then //
         assertThat(addressEntity).isNotNull();
         assertThat(addressEntity.getPostalCode()).isEqualTo("62-030");
     }
 
     @Test
     public void testShouldSaveAddress() {
-        // given
+        // given //
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setAddressLine1("line1");
         addressEntity.setAddressLine2("line2");
@@ -39,10 +40,10 @@ public class AddressDaoTest
         addressEntity.setPostalCode("66-666");
         long entitiesNumBefore = addressDao.count();
 
-        // when
+        // when //
         final AddressEntity saved = addressDao.save(addressEntity);
 
-        // then
+        // then //
         assertThat(saved).isNotNull();
         assertThat(saved.getId()).isNotNull();
         assertThat(addressDao.count()).isEqualTo(entitiesNumBefore+1);
@@ -51,14 +52,15 @@ public class AddressDaoTest
     @Transactional
     @Test
     public void testShouldSaveAndRemoveAddress() {
-        // given
+
+        // given //
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setAddressLine1("line1");
         addressEntity.setAddressLine2("line2");
         addressEntity.setCity("City1");
         addressEntity.setPostalCode("66-666");
 
-        // when
+        // when //
         final AddressEntity saved = addressDao.save(addressEntity);
         assertThat(saved.getId()).isNotNull();
         final AddressEntity newSaved = addressDao.findOne(saved.getId());
@@ -66,10 +68,9 @@ public class AddressDaoTest
 
         addressDao.delete(saved.getId());
 
-        // then
+        // then //
         final AddressEntity removed = addressDao.findOne(saved.getId());
         assertThat(removed).isNull();
     }
-
 
 }
